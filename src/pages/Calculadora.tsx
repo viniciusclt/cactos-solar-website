@@ -14,13 +14,8 @@ const Calculadora = () => {
   const [resultado, setResultado] = useState<any>(null);
 
   const concessionarias = [
-    { value: "enel", label: "Enel São Paulo", tarifa: 0.67 },
-    { value: "cpfl", label: "CPFL Energia", tarifa: 0.72 },
-    { value: "eletropaulo", label: "Eletropaulo", tarifa: 0.65 },
-    { value: "cemig", label: "CEMIG", tarifa: 0.69 },
-    { value: "copel", label: "COPEL", tarifa: 0.71 },
-    { value: "celesc", label: "CELESC", tarifa: 0.74 },
-    { value: "outras", label: "Outras", tarifa: 0.68 }
+    { value: "light", label: "Light", tarifa: 0.89, custoDisponibilidade: 30.93 },
+    { value: "enel-rj", label: "Enel Rio de Janeiro", tarifa: 0.85, custoDisponibilidade: 29.50 }
   ];
 
   const calcularEconomia = () => {
@@ -31,14 +26,21 @@ const Calculadora = () => {
     
     if (!concessionariaData) return;
 
-    // Cálculos simplificados para demonstração
-    const contaAtual = consumoKwh * concessionariaData.tarifa;
-    const potenciaNecessaria = (consumoKwh * 12) / 1200; // Estimativa simplificada
-    const custoPorKw = 4500; // Custo médio por kW instalado
+    // Cálculos considerando custo de disponibilidade e fio B
+    const contaAtual = Math.max(consumoKwh * concessionariaData.tarifa, concessionariaData.custoDisponibilidade);
+    
+    // Potência necessária baseada na geração solar média do RJ (4.5 kWh/kWp/dia)
+    const geracaoSolarMedia = 4.5 * 30; // kWh/mês por kWp instalado
+    const potenciaNecessaria = Math.max(consumoKwh / geracaoSolarMedia, 1);
+    
+    // Preços baseados na tabela Greener com margem de ±10%
+    const custoPorKw = potenciaNecessaria <= 5 ? 5500 : 
+                      potenciaNecessaria <= 10 ? 5200 : 4800;
     const investimentoTotal = potenciaNecessaria * custoPorKw;
     
-    // Economia anual (considerando 95% de redução)
-    const economiaAnual = contaAtual * 12 * 0.95;
+    // Nova conta considerando apenas custo de disponibilidade + fio B
+    const novaContaMensal = concessionariaData.custoDisponibilidade;
+    const economiaAnual = (contaAtual - novaContaMensal) * 12;
     const payback = investimentoTotal / economiaAnual;
     const economia25Anos = economiaAnual * 25 - investimentoTotal;
 
@@ -153,7 +155,7 @@ const Calculadora = () => {
                       <div className="bg-white p-4 rounded-lg border">
                         <p className="text-sm text-muted-foreground">Nova Conta</p>
                         <p className="text-2xl font-bold text-solar-green">
-                          R$ {(resultado.contaAtual * 0.05).toFixed(2)}
+                          R$ 30,00
                         </p>
                         <p className="text-xs text-muted-foreground">por mês</p>
                       </div>

@@ -62,9 +62,9 @@ const Contato = () => {
     {
       icon: Phone,
       titulo: "Telefone",
-      info: "(11) 99999-9999",
+      info: "(21) 97681-1065",
       subinfo: "WhatsApp disponível",
-      link: "tel:+5511999999999"
+      link: "tel:+5521976811065"
     },
     {
       icon: Mail,
@@ -76,8 +76,8 @@ const Contato = () => {
     {
       icon: MapPin,
       titulo: "Endereço",
-      info: "Rua das Energias, 123",
-      subinfo: "São Paulo - SP, CEP: 01234-567",
+      info: "Rua Pinho, Anil",
+      subinfo: "Rio de Janeiro - RJ",
       link: "https://maps.google.com"
     },
     {
@@ -157,7 +157,7 @@ const Contato = () => {
                       asChild
                     >
                       <a 
-                        href="https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre energia solar."
+                        href="https://wa.me/5521976811065?text=Olá! Gostaria de saber mais sobre energia solar."
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -357,9 +357,9 @@ const Contato = () => {
             <div className="h-96 bg-gradient-to-br from-solar-green to-solar-yellow flex items-center justify-center">
               <div className="text-center text-white">
                 <MapPin className="w-16 h-16 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold mb-2">Cactos Energia Solar</h3>
-                <p className="text-lg">Rua das Energias, 123</p>
-                <p>São Paulo - SP, CEP: 01234-567</p>
+                <h3 className="text-2xl font-bold mb-2">Cactos - Soluções em Energia</h3>
+                <p className="text-lg">Rua Pinho, Anil</p>
+                <p>Rio de Janeiro - RJ</p>
                 <Button variant="outline" className="mt-4 border-white text-white hover:bg-white hover:text-solar-green">
                   <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer">
                     Ver no Google Maps

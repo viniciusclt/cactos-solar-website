@@ -24,12 +24,14 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-solar rounded-lg flex items-center justify-center">
-              <Sun className="w-6 h-6 text-white" />
-            </div>
+            <img 
+              src="/lovable-uploads/bf9afb8f-07f3-4684-b8ae-40cc79de761c.png" 
+              alt="Cactos - Soluções em Energia" 
+              className="h-10 w-auto"
+            />
             <div className="flex flex-col">
               <span className="font-bold text-lg text-solar-green">Cactos</span>
-              <span className="text-xs text-muted-foreground">Energia Solar</span>
+              <span className="text-xs text-muted-foreground">Soluções em Energia</span>
             </div>
           </Link>
 
@@ -52,12 +54,18 @@ const Navigation = () => {
 
           {/* CTA Button Desktop */}
           <div className="hidden md:flex items-center space-x-4">
-            <a href="tel:+5511999999999" className="flex items-center text-sm text-muted-foreground hover:text-solar-green">
+            <a href="tel:+5521976811065" className="flex items-center text-sm text-muted-foreground hover:text-solar-green">
               <Phone className="w-4 h-4 mr-1" />
-              (11) 99999-9999
+              (21) 97681-1065
             </a>
             <Button variant="cta" size="sm" asChild>
-              <Link to="/contato">Solicitar Orçamento</Link>
+              <a 
+                href="https://wa.me/5521976811065?text=Vim%20pelo%20site%20e%20gostaria%20de%20fazer%20um%20orçamento"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Solicitar Orçamento
+              </a>
             </Button>
           </div>
 
@@ -89,14 +97,19 @@ const Navigation = () => {
                 </Link>
               ))}
               <div className="pt-4 border-t">
-                <a href="tel:+5511999999999" className="flex items-center text-sm text-muted-foreground mb-4">
+                <a href="tel:+5521976811065" className="flex items-center text-sm text-muted-foreground mb-4">
                   <Phone className="w-4 h-4 mr-2" />
-                  (11) 99999-9999
+                  (21) 97681-1065
                 </a>
                 <Button variant="cta" className="w-full" asChild>
-                  <Link to="/contato" onClick={() => setIsOpen(false)}>
+                  <a 
+                    href="https://wa.me/5521976811065?text=Vim%20pelo%20site%20e%20gostaria%20de%20fazer%20um%20orçamento"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsOpen(false)}
+                  >
                     Solicitar Orçamento
-                  </Link>
+                  </a>
                 </Button>
               </div>
             </div>

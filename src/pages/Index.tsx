@@ -35,12 +35,16 @@ const Index = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
             <Button variant="cta" size="xl" asChild>
-              <Link to="/contato">
+              <a 
+                href="https://wa.me/5521976811065?text=Vim%20pelo%20site%20e%20gostaria%20de%20fazer%20um%20orçamento"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Solicitar Orçamento Grátis
                 <ArrowRight className="ml-2" />
-              </Link>
+              </a>
             </Button>
-            <Button variant="outline" size="xl" className="border-white text-white hover:bg-white hover:text-solar-green">
+            <Button variant="outline" size="xl" className="border-white text-white hover:bg-white hover:text-primary">
               <Link to="/calculadora">Calcular Economia</Link>
             </Button>
           </div>
@@ -251,8 +255,14 @@ const Index = () => {
                 <ArrowRight className="ml-2" />
               </Link>
             </Button>
-            <Button variant="outline" size="xl" className="border-white text-white hover:bg-white hover:text-energy-blue">
-              <Link to="/contato">Falar com Especialista</Link>
+            <Button variant="outline" size="xl" className="border-white text-white hover:bg-white hover:text-primary">
+              <a 
+                href="https://wa.me/5521976811065?text=Vim%20pelo%20site%20e%20gostaria%20de%20falar%20com%20um%20especialista"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Falar com Especialista
+              </a>
             </Button>
           </div>
         </div>
