@@ -52,6 +52,19 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Energia Solar Color System
+				solar: {
+					green: 'hsl(var(--solar-green))',
+					'green-light': 'hsl(var(--solar-green-light))',
+					'green-dark': 'hsl(var(--solar-green-dark))',
+					yellow: 'hsl(var(--solar-yellow))',
+					'yellow-light': 'hsl(var(--solar-yellow-light))',
+					orange: 'hsl(var(--solar-orange))',
+					'orange-light': 'hsl(var(--solar-orange-light))',
+				},
+				energy: {
+					blue: 'hsl(var(--energy-blue))',
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -62,6 +75,19 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			backgroundImage: {
+				'gradient-solar': 'var(--gradient-solar)',
+				'gradient-energy': 'var(--gradient-energy)',
+				'gradient-sunset': 'var(--gradient-sunset)',
+			},
+			boxShadow: {
+				'solar': 'var(--shadow-solar)',
+				'energy': 'var(--shadow-energy)',
+			},
+			transitionTimingFunction: {
+				'smooth': 'var(--transition-smooth)',
+				'bounce': 'var(--transition-bounce)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +110,31 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(20px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'pulse-solar': {
+					'0%, 100%': {
+						boxShadow: '0 0 0 0 hsl(var(--solar-green) / 0.7)'
+					},
+					'70%': {
+						boxShadow: '0 0 0 10px hsl(var(--solar-green) / 0)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.6s ease-out',
+				'pulse-solar': 'pulse-solar 2s infinite'
 			}
 		}
 	},
