@@ -75,7 +75,8 @@ const Calculadora = () => {
     
     // Potência necessária baseada na geração solar média do RJ (4.5 kWh/kWp/dia)
     const geracaoSolarMedia = 4.5 * 30; // kWh/mês por kWp instalado
-    const potenciaNecessaria = Math.max(consumoKwh / geracaoSolarMedia, 1);
+    const eficienciaSystem = 0.8; // 80% de eficiência do sistema
+    const potenciaNecessaria = Math.max((consumoKwh / geracaoSolarMedia) / eficienciaSystem, 1);
     
     // Preço baseado na tabela Greener
     const precoPorKwp = obterPrecoKwp(potenciaNecessaria);
