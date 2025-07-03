@@ -80,20 +80,36 @@ const Calculadora = () => {
     // Preço baseado na tabela Greener
     const precoPorKwp = obterPrecoKwp(potenciaNecessaria);
     const investimentoTotal = potenciaNecessaria * precoPorKwp;
+    const investimentoMin = investimentoTotal * 0.9;
+    const investimentoMax = investimentoTotal * 1.1;
     
     // Valor residual da conta = CDD*1,10+(consumo médio*0,9)
     const valorResidual = (conexaoData.cdd * concessionariaData.tarifa * 1.10) + (consumoKwh * concessionariaData.tarifa * 0.9 * 0.1);
     const economiaAnual = (contaAtual - valorResidual) * 12;
-    const payback = investimentoTotal / economiaAnual;
-    const economia25Anos = economiaAnual * 25 - investimentoTotal;
+    
+    // Cálculo do payback considerando inflação de 15% a.a. na conta de energia
+    const taxaInflacao = 0.15;
+    let valorPresente = 0;
+    let payback = 0;
+    for (let ano = 1; ano <= 25; ano++) {
+      const economiaAno = economiaAnual * Math.pow(1 + taxaInflacao, ano - 1);
+      valorPresente += economiaAno;
+      if (valorPresente >= investimentoTotal && payback === 0) {
+        payback = ano;
+      }
+    }
+    
+    const economia25Anos = valorPresente - investimentoTotal;
 
     setResultado({
       contaAtual,
       potencia: potenciaNecessaria.toFixed(2),
       investimento: investimentoTotal,
+      investimentoMin,
+      investimentoMax,
       economiaAnual,
       economiaMatual: (contaAtual - valorResidual),
-      payback: payback.toFixed(1),
+      payback: payback.toString(),
       economia25Anos,
       valorResidual,
       reducaoPercentual: Math.round(((contaAtual - valorResidual) / contaAtual) * 100)
@@ -209,25 +225,25 @@ const Calculadora = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="bg-white p-4 rounded-lg border">
                         <p className="text-sm text-muted-foreground">Conta Atual</p>
-                        <p className="text-2xl font-bold text-destructive">
-                          R$ {resultado.contaAtual.toFixed(2)}
-                        </p>
+                         <p className="text-2xl font-bold text-destructive">
+                           R$ {resultado.contaAtual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                         </p>
                         <p className="text-xs text-muted-foreground">por mês</p>
                       </div>
                       <div className="bg-white p-4 rounded-lg border">
                         <p className="text-sm text-muted-foreground">Nova Conta</p>
-                        <p className="text-2xl font-bold text-solar-green">
-                          R$ {resultado.valorResidual.toFixed(2)}
-                        </p>
+                         <p className="text-2xl font-bold text-solar-green">
+                           R$ {resultado.valorResidual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                         </p>
                         <p className="text-xs text-muted-foreground">por mês</p>
                       </div>
                     </div>
 
                     <div className="bg-solar-green text-white p-6 rounded-lg text-center">
                       <p className="text-lg mb-2">Economia Mensal</p>
-                      <p className="text-4xl font-bold">
-                        R$ {resultado.economiaMatual.toFixed(2)}
-                      </p>
+                       <p className="text-4xl font-bold">
+                         R$ {resultado.economiaMatual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                       </p>
                       <p className="text-sm opacity-90">
                         {resultado.reducaoPercentual}% de redução
                       </p>
@@ -238,10 +254,12 @@ const Calculadora = () => {
                         <span className="font-semibold">Potência Necessária:</span>
                         <span>{resultado.potencia} kWp</span>
                       </div>
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="font-semibold">Investimento Total:</span>
-                        <span className="font-bold">R$ {resultado.investimento.toLocaleString()}</span>
-                      </div>
+                       <div className="flex justify-between items-center py-2 border-b">
+                         <span className="font-semibold">Investimento Total:</span>
+                         <span className="font-bold">
+                           R$ {resultado.investimentoMin.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - R$ {resultado.investimentoMax.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                         </span>
+                       </div>
                       <div className="flex justify-between items-center py-2 border-b">
                         <span className="font-semibold">Retorno do Investimento:</span>
                         <span className="text-solar-green font-bold">{resultado.payback} anos</span>
