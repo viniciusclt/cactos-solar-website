@@ -15,8 +15,8 @@ const Calculadora = () => {
   const [resultado, setResultado] = useState<any>(null);
 
   const concessionarias = [
-    { value: "light", label: "Light", tarifa: 0.89 },
-    { value: "enel-rj", label: "Enel Rio de Janeiro", tarifa: 0.85 }
+    { value: "light", label: "Light", tarifa: 1.20 },
+    { value: "enel-rj", label: "Enel-RJ", tarifa: 1.20 }
   ];
 
   const tiposConexao = [
