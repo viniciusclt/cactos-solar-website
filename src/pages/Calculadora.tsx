@@ -11,36 +11,79 @@ import Layout from "@/components/Layout";
 const Calculadora = () => {
   const [consumo, setConsumo] = useState("");
   const [concessionaria, setConcessionaria] = useState("");
+  const [tipoConexao, setTipoConexao] = useState("trifasica");
   const [resultado, setResultado] = useState<any>(null);
 
   const concessionarias = [
-    { value: "light", label: "Light", tarifa: 0.89, custoDisponibilidade: 30.93 },
-    { value: "enel-rj", label: "Enel Rio de Janeiro", tarifa: 0.85, custoDisponibilidade: 29.50 }
+    { value: "light", label: "Light", tarifa: 0.89 },
+    { value: "enel-rj", label: "Enel Rio de Janeiro", tarifa: 0.85 }
   ];
 
+  const tiposConexao = [
+    { value: "monofasica", label: "Monofásica", cdd: 30 },
+    { value: "bifasica", label: "Bifásica", cdd: 50 },
+    { value: "trifasica", label: "Trifásica", cdd: 100 }
+  ];
+
+  // Tabela Greener de preços por kWp (jan/25)
+  const tabelaGreener = [
+    { potencia: 2, preco: 3.64 * 1000 },
+    { potencia: 4, preco: 2.88 * 1000 },
+    { potencia: 8, preco: 2.42 * 1000 },
+    { potencia: 12, preco: 2.27 * 1000 },
+    { potencia: 30, preco: 2.16 * 1000 },
+    { potencia: 50, preco: 2.19 * 1000 },
+    { potencia: 75, preco: 2.51 * 1000 },
+    { potencia: 150, preco: 2.32 * 1000 },
+    { potencia: 300, preco: 2.23 * 1000 },
+    { potencia: 500, preco: 2.18 * 1000 },
+    { potencia: 1000, preco: 2.18 * 1000 },
+    { potencia: 3000, preco: 2.17 * 1000 },
+    { potencia: 5000, preco: 2.16 * 1000 }
+  ];
+
+  const obterPrecoKwp = (potencia: number) => {
+    // Encontra o preço mais próximo na tabela Greener
+    let precoBase = tabelaGreener[0].preco;
+    for (let i = 0; i < tabelaGreener.length; i++) {
+      if (potencia <= tabelaGreener[i].potencia) {
+        precoBase = tabelaGreener[i].preco;
+        break;
+      }
+      if (i === tabelaGreener.length - 1) {
+        precoBase = tabelaGreener[i].preco;
+      }
+    }
+    
+    // Aplicar margem de ±10%
+    const margemVariacao = 0.1;
+    const precoComMargem = precoBase * (1 + (Math.random() * margemVariacao * 2 - margemVariacao));
+    return precoComMargem;
+  };
+
   const calcularEconomia = () => {
-    if (!consumo || !concessionaria) return;
+    if (!consumo || !concessionaria || !tipoConexao) return;
 
     const consumoKwh = parseFloat(consumo);
     const concessionariaData = concessionarias.find(c => c.value === concessionaria);
+    const conexaoData = tiposConexao.find(c => c.value === tipoConexao);
     
-    if (!concessionariaData) return;
+    if (!concessionariaData || !conexaoData) return;
 
-    // Cálculos considerando custo de disponibilidade e fio B
-    const contaAtual = Math.max(consumoKwh * concessionariaData.tarifa, concessionariaData.custoDisponibilidade);
+    // Conta atual usando a fórmula: CDD * 1,10 + (consumo médio * 0,9)
+    const contaAtual = (conexaoData.cdd * concessionariaData.tarifa * 1.10) + (consumoKwh * concessionariaData.tarifa * 0.9);
     
     // Potência necessária baseada na geração solar média do RJ (4.5 kWh/kWp/dia)
     const geracaoSolarMedia = 4.5 * 30; // kWh/mês por kWp instalado
     const potenciaNecessaria = Math.max(consumoKwh / geracaoSolarMedia, 1);
     
-    // Preços baseados na tabela Greener com margem de ±10%
-    const custoPorKw = potenciaNecessaria <= 5 ? 5500 : 
-                      potenciaNecessaria <= 10 ? 5200 : 4800;
-    const investimentoTotal = potenciaNecessaria * custoPorKw;
+    // Preço baseado na tabela Greener
+    const precoPorKwp = obterPrecoKwp(potenciaNecessaria);
+    const investimentoTotal = potenciaNecessaria * precoPorKwp;
     
-    // Nova conta considerando apenas custo de disponibilidade + fio B
-    const novaContaMensal = concessionariaData.custoDisponibilidade;
-    const economiaAnual = (contaAtual - novaContaMensal) * 12;
+    // Valor residual da conta = CDD*1,10+(consumo médio*0,9)
+    const valorResidual = (conexaoData.cdd * concessionariaData.tarifa * 1.10) + (consumoKwh * concessionariaData.tarifa * 0.9 * 0.1);
+    const economiaAnual = (contaAtual - valorResidual) * 12;
     const payback = investimentoTotal / economiaAnual;
     const economia25Anos = economiaAnual * 25 - investimentoTotal;
 
@@ -49,10 +92,11 @@ const Calculadora = () => {
       potencia: potenciaNecessaria.toFixed(2),
       investimento: investimentoTotal,
       economiaAnual,
-      economiaMatual: economiaAnual / 12,
+      economiaMatual: (contaAtual - valorResidual),
       payback: payback.toFixed(1),
       economia25Anos,
-      reducaoPercentual: 95
+      valorResidual,
+      reducaoPercentual: Math.round(((contaAtual - valorResidual) / contaAtual) * 100)
     });
   };
 
@@ -121,6 +165,24 @@ const Calculadora = () => {
                     </Select>
                   </div>
 
+                  <div>
+                    <Label htmlFor="tipoConexao" className="text-lg font-semibold">
+                      Tipo de Conexão
+                    </Label>
+                    <Select value={tipoConexao} onValueChange={setTipoConexao}>
+                      <SelectTrigger className="mt-2 h-12 text-lg">
+                        <SelectValue placeholder="Selecione o tipo de conexão" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {tiposConexao.map((tipo) => (
+                          <SelectItem key={tipo.value} value={tipo.value}>
+                            {tipo.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
                   <Button 
                     onClick={calcularEconomia} 
                     variant="cta" 
@@ -155,7 +217,7 @@ const Calculadora = () => {
                       <div className="bg-white p-4 rounded-lg border">
                         <p className="text-sm text-muted-foreground">Nova Conta</p>
                         <p className="text-2xl font-bold text-solar-green">
-                          R$ 30,00
+                          R$ {resultado.valorResidual.toFixed(2)}
                         </p>
                         <p className="text-xs text-muted-foreground">por mês</p>
                       </div>
