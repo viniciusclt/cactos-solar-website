@@ -34,17 +34,17 @@ const CalculadoraResults = ({ resultado }: CalculadoraResultsProps) => {
       <CardContent className="space-y-6">
         {/* Primeira linha: Conta Atual e Economia lado a lado */}        
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="bg-muted/50 p-6 rounded-lg border">
+          <div className="bg-muted/50 p-4 rounded-lg border">
             <p className="text-sm text-muted-foreground">Conta Atual</p>
-            <p className="text-3xl font-bold text-destructive">
+            <p className="text-2xl font-bold text-destructive">
               R$ {resultado.contaAtual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </p>
             <p className="text-xs text-muted-foreground">por mês</p>
           </div>
           
-          <div className="bg-solar-green text-white p-6 rounded-lg">
+          <div className="bg-solar-green text-white p-4 rounded-lg">
             <p className="text-sm mb-1 opacity-90">Economia Mensal</p>
-            <p className="text-3xl font-bold">
+            <p className="text-2xl font-bold">
               R$ {resultado.economiaMatual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </p>
             <p className="text-xs opacity-90">{resultado.reducaoPercentual}% de redução</p>
@@ -67,7 +67,7 @@ const CalculadoraResults = ({ resultado }: CalculadoraResultsProps) => {
           </div>
           <div className="py-2 border-b">
             <p className="font-semibold mb-1">Investimento Total:</p>
-            <p className="font-bold">
+            <p className="font-bold text-solar-green">
               R$ {resultado.investimentoMin.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - R$ {resultado.investimentoMax.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </p>
           </div>
