@@ -102,6 +102,11 @@ const Calculadora = () => {
     
     const economia25Anos = valorPresente - investimentoTotal;
 
+    // Cálculo do financiamento em 60x com taxa de 1,80% a.m.
+    const taxaFinanciamento = 0.018; // 1,80% ao mês
+    const numeroParcelas = 60;
+    const parcelaFinanciamento = investimentoTotal * (taxaFinanciamento * Math.pow(1 + taxaFinanciamento, numeroParcelas)) / (Math.pow(1 + taxaFinanciamento, numeroParcelas) - 1);
+
     setResultado({
       contaAtual,
       potencia: potenciaNecessaria.toFixed(2),
@@ -113,7 +118,8 @@ const Calculadora = () => {
       payback: payback.toString(),
       economia25Anos,
       valorResidual,
-      reducaoPercentual: Math.round(((contaAtual - valorResidual) / contaAtual) * 100)
+      reducaoPercentual: Math.round(((contaAtual - valorResidual) / contaAtual) * 100),
+      parcelaFinanciamento
     });
   };
 
@@ -222,56 +228,64 @@ const Calculadora = () => {
                       Seus Resultados
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="bg-white p-4 rounded-lg border">
-                        <p className="text-sm text-muted-foreground">Conta Atual</p>
-                         <p className="text-2xl font-bold text-destructive">
-                           R$ {resultado.contaAtual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                         </p>
-                        <p className="text-xs text-muted-foreground">por mês</p>
-                      </div>
-                      <div className="bg-white p-4 rounded-lg border">
-                        <p className="text-sm text-muted-foreground">Nova Conta</p>
-                         <p className="text-2xl font-bold text-solar-green">
+                   <CardContent className="space-y-6">
+                     {/* Nova Conta (Destaque Central) */}
+                     <div className="relative">
+                       <div className="bg-white p-8 rounded-lg border-2 border-solar-green text-center">
+                         <p className="text-lg text-muted-foreground mb-2">Sua Nova Conta</p>
+                         <p className="text-6xl font-bold text-solar-green mb-2">
                            R$ {resultado.valorResidual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                          </p>
-                        <p className="text-xs text-muted-foreground">por mês</p>
-                      </div>
-                    </div>
+                         <p className="text-lg text-muted-foreground">por mês</p>
+                       </div>
+                       
+                       {/* Economia Mensal (Canto direito, menor) */}
+                       <div className="absolute top-0 right-0 transform translate-x-4 -translate-y-4 bg-solar-green text-white p-4 rounded-lg shadow-lg">
+                         <p className="text-sm mb-1">Economia</p>
+                         <p className="text-2xl font-bold">
+                           R$ {resultado.economiaMatual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                         </p>
+                         <p className="text-xs opacity-90">{resultado.reducaoPercentual}% de redução</p>
+                       </div>
+                     </div>
 
-                    <div className="bg-solar-green text-white p-6 rounded-lg text-center">
-                      <p className="text-lg mb-2">Economia Mensal</p>
-                       <p className="text-4xl font-bold">
-                         R$ {resultado.economiaMatual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                     {/* Conta Atual */}
+                     <div className="bg-muted/50 p-4 rounded-lg border">
+                       <p className="text-sm text-muted-foreground">Conta Atual</p>
+                       <p className="text-2xl font-bold text-destructive">
+                         R$ {resultado.contaAtual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                        </p>
-                      <p className="text-sm opacity-90">
-                        {resultado.reducaoPercentual}% de redução
-                      </p>
-                    </div>
+                       <p className="text-xs text-muted-foreground">por mês</p>
+                     </div>
 
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="font-semibold">Potência Necessária:</span>
-                        <span>{resultado.potencia} kWp</span>
-                      </div>
+                     <div className="space-y-4">
+                       <div className="flex justify-between items-center py-2 border-b">
+                         <span className="font-semibold">Potência Necessária:</span>
+                         <span>{resultado.potencia} kWp</span>
+                       </div>
                        <div className="flex justify-between items-center py-2 border-b">
                          <span className="font-semibold">Investimento Total:</span>
                          <span className="font-bold">
                            R$ {resultado.investimentoMin.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - R$ {resultado.investimentoMax.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                          </span>
                        </div>
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="font-semibold">Retorno do Investimento:</span>
-                        <span className="text-solar-green font-bold">{resultado.payback} anos</span>
-                      </div>
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="font-semibold">Economia em 25 anos:</span>
-                        <span className="text-solar-green font-bold">
-                          R$ {resultado.economia25Anos.toLocaleString()}
-                        </span>
-                      </div>
-                    </div>
+                       <div className="flex justify-between items-center py-2 border-b">
+                         <span className="font-semibold">Financiamento 60x:</span>
+                         <span className="text-solar-green font-bold">
+                           R$ {resultado.parcelaFinanciamento.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                         </span>
+                       </div>
+                       <div className="flex justify-between items-center py-2 border-b">
+                         <span className="font-semibold">Retorno do Investimento:</span>
+                         <span className="text-solar-green font-bold">{resultado.payback} anos</span>
+                       </div>
+                       <div className="flex justify-between items-center py-2 border-b">
+                         <span className="font-semibold">Economia em 25 anos:</span>
+                         <span className="text-solar-green font-bold">
+                           R$ {resultado.economia25Anos.toLocaleString()}
+                         </span>
+                       </div>
+                     </div>
 
                     <div className="pt-4">
                       <Button variant="sunset" size="lg" className="w-full" asChild>
