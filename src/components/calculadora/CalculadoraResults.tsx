@@ -63,11 +63,11 @@ const CalculadoraResults = ({ resultado }: CalculadoraResultsProps) => {
         <div className="space-y-4">
           <div className="flex justify-between items-center py-2 border-b">
             <span className="font-semibold">Potência Necessária:</span>
-            <span>{resultado.potencia} kWp</span>
+            <span className="text-solar-green font-bold">{resultado.potencia} kWp</span>
           </div>
           <div className="py-2 border-b">
             <p className="font-semibold mb-1">Investimento Total:</p>
-            <p className="font-bold text-solar-green">
+            <p className="font-bold text-solar-green text-right">
               R$ {resultado.investimentoMin.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - R$ {resultado.investimentoMax.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </p>
           </div>
