@@ -8,6 +8,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle } from "lucide-react";
 import Layout from "@/components/Layout";
+import LeadCapturePopup from "@/components/LeadCapturePopup";
+import { useLeadCapture } from "@/hooks/useLeadCapture";
 import { useToast } from "@/hooks/use-toast";
 
 const Contato = () => {
@@ -23,6 +25,16 @@ const Contato = () => {
   
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  
+  const { 
+    isPopupOpen, 
+    currentTrigger, 
+    popupTitle, 
+    popupDescription, 
+    openPopup, 
+    closePopup, 
+    handleLeadSubmit 
+  } = useLeadCapture();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -154,15 +166,9 @@ const Contato = () => {
                     <Button 
                       variant="outline" 
                       className="w-full border-white text-white hover:bg-white hover:text-solar-orange"
-                      asChild
+                      onClick={() => openPopup('contato', '💬 Vamos conversar no WhatsApp!', 'Para um atendimento mais rápido, informe seus dados:')}
                     >
-                      <a 
-                        href="https://wa.me/5521976811065?text=Olá! Gostaria de saber mais sobre energia solar."
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Chamar no WhatsApp
-                      </a>
+                      Chamar no WhatsApp
                     </Button>
                   </div>
                 </CardContent>
@@ -370,6 +376,18 @@ const Contato = () => {
           </Card>
         </div>
       </section>
+
+      {/* Lead Capture Popup */}
+      {currentTrigger && (
+        <LeadCapturePopup
+          isOpen={isPopupOpen}
+          onClose={closePopup}
+          onSubmit={handleLeadSubmit}
+          trigger={currentTrigger}
+          title={popupTitle}
+          description={popupDescription}
+        />
+      )}
     </Layout>
   );
 };

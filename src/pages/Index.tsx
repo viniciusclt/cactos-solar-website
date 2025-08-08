@@ -3,12 +3,34 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Zap, Shield, TrendingUp, Users, CheckCircle, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
+import LeadCapturePopup from "@/components/LeadCapturePopup";
+import { useLeadCapture } from "@/hooks/useLeadCapture";
 import heroImage from "@/assets/hero-solar-installation.jpg";
 import residentialImage from "@/assets/residential-solar.jpg";
 import commercialImage from "@/assets/commercial-solar.jpg";
 import maintenanceImage from "@/assets/maintenance-solar.jpg";
 
 const Index = () => {
+  const { 
+    isPopupOpen, 
+    currentTrigger, 
+    popupTitle, 
+    popupDescription, 
+    openPopup, 
+    closePopup, 
+    handleLeadSubmit 
+  } = useLeadCapture();
+
+  const handleOrcamentoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    openPopup('orcamento');
+  };
+
+  const handleCalculadoraClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    openPopup('calculadora');
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -34,18 +56,12 @@ const Index = () => {
             Reduza sua conta de luz em até 95% com nossos sistemas fotovoltaicos de alta qualidade
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-            <Button variant="cta" size="xl" asChild>
-              <a 
-                href="https://wa.me/5521976811065?text=Vim%20pelo%20site%20e%20gostaria%20de%20fazer%20um%20orçamento"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Solicitar Orçamento Grátis
-                <ArrowRight className="ml-2" />
-              </a>
+            <Button variant="cta" size="xl" onClick={handleOrcamentoClick}>
+              Solicitar Orçamento Grátis
+              <ArrowRight className="ml-2" />
             </Button>
-            <Button variant="outline" size="xl" className="border-white text-white hover:bg-white hover:text-primary">
-              <Link to="/calculadora">Calcular Economia</Link>
+            <Button variant="outline" size="xl" className="border-white text-white hover:bg-white hover:text-primary" onClick={handleCalculadoraClick}>
+              Calcular Economia
             </Button>
           </div>
         </div>
@@ -249,24 +265,28 @@ const Index = () => {
             Faça uma simulação gratuita e descubra quanto você pode economizar com energia solar
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="sunset" size="xl" asChild>
-              <Link to="/calculadora">
-                Calcular Minha Economia
-                <ArrowRight className="ml-2" />
-              </Link>
+            <Button variant="sunset" size="xl" onClick={handleCalculadoraClick}>
+              Calcular Minha Economia
+              <ArrowRight className="ml-2" />
             </Button>
-            <Button variant="outline" size="xl" className="border-white text-white hover:bg-white hover:text-primary">
-              <a 
-                href="https://wa.me/5521976811065?text=Vim%20pelo%20site%20e%20gostaria%20de%20falar%20com%20um%20especialista"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Falar com Especialista
-              </a>
+            <Button variant="outline" size="xl" className="border-white text-white hover:bg-white hover:text-primary" onClick={() => openPopup('contato')}>
+              Falar com Especialista
             </Button>
           </div>
         </div>
       </section>
+
+      {/* Lead Capture Popup */}
+      {currentTrigger && (
+        <LeadCapturePopup
+          isOpen={isPopupOpen}
+          onClose={closePopup}
+          onSubmit={handleLeadSubmit}
+          trigger={currentTrigger}
+          title={popupTitle}
+          description={popupDescription}
+        />
+      )}
     </Layout>
   );
 };

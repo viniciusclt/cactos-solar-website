@@ -3,7 +3,10 @@ import CalculadoraHero from "@/components/calculadora/CalculadoraHero";
 import CalculadoraForm from "@/components/calculadora/CalculadoraForm";
 import CalculadoraResults from "@/components/calculadora/CalculadoraResults";
 import CalculadoraInfo from "@/components/calculadora/CalculadoraInfo";
+import LeadCapturePopup from "@/components/LeadCapturePopup";
 import { useCalculadora } from "@/hooks/useCalculadora";
+import { useLeadCapture } from "@/hooks/useLeadCapture";
+import { useEffect } from "react";
 
 const Calculadora = () => {
   const {
@@ -18,6 +21,31 @@ const Calculadora = () => {
     tiposConexao,
     calcularEconomia
   } = useCalculadora();
+
+  const { 
+    isPopupOpen, 
+    currentTrigger, 
+    popupTitle, 
+    popupDescription, 
+    openPopup, 
+    closePopup, 
+    handleLeadSubmit 
+  } = useLeadCapture();
+
+  // Mostrar popup após cálculo ser realizado
+  useEffect(() => {
+    if (resultado && resultado.economiaAnual > 0) {
+      const timer = setTimeout(() => {
+        openPopup(
+          'orcamento', 
+          '🎯 Ótima economia! Vamos tornar isso realidade?',
+          `Com uma economia de R$ ${resultado.economiaAnual.toLocaleString('pt-BR')}/ano, que tal solicitar um orçamento personalizado?`
+        );
+      }, 2000); // Aguarda 2 segundos após mostrar o resultado
+
+      return () => clearTimeout(timer);
+    }
+  }, [resultado, openPopup]);
 
   return (
     <Layout>
@@ -47,6 +75,18 @@ const Calculadora = () => {
           </div>
         </div>
       </section>
+
+      {/* Lead Capture Popup */}
+      {currentTrigger && (
+        <LeadCapturePopup
+          isOpen={isPopupOpen}
+          onClose={closePopup}
+          onSubmit={handleLeadSubmit}
+          trigger={currentTrigger}
+          title={popupTitle}
+          description={popupDescription}
+        />
+      )}
     </Layout>
   );
 };
