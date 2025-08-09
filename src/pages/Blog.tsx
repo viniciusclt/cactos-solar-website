@@ -8,64 +8,19 @@ import { Calendar, Clock, User, Search, TrendingUp, Zap, Shield, Lightbulb, File
 import { Link } from "react-router-dom";
 import LeadCapturePopup from "@/components/LeadCapturePopup";
 import { useLeadCapture } from "@/hooks/useLeadCapture";
+import { getPublishedPosts, getRecentPosts } from "@/data/blogPosts";
 
-// Dados simulados dos posts do blog
-const blogPosts = [
-  {
-    id: 1,
-    title: "Como Calcular o Retorno do Investimento em Energia Solar",
-    excerpt: "Descubra como calcular o ROI da energia solar e entenda por que é um dos melhores investimentos para sua casa ou empresa.",
-    content: "A energia solar tem se tornado uma das formas mais inteligentes de investimento...",
-    author: "Equipe Cactos",
-    date: "2024-01-15",
-    readTime: "5 min",
-    category: "Investimento",
-    tags: ["ROI", "Economia", "Investimento"],
-    featured: true,
-    image: "/placeholder.svg"
-  },
-  {
-    id: 2,
-    title: "Energia Solar no Rio de Janeiro: Guia Completo 2024",
-    excerpt: "Tudo que você precisa saber sobre energia solar no RJ: regulamentação, incentivos e melhores práticas.",
-    content: "O Rio de Janeiro tem se destacado como um dos estados líderes...",
-    author: "Eng. Carlos Silva",
-    date: "2024-01-10",
-    readTime: "8 min",
-    category: "Guias",
-    tags: ["Rio de Janeiro", "Regulamentação", "Guia"],
-    featured: false,
-    image: "/placeholder.svg"
-  },
-  {
-    id: 3,
-    title: "Mitos e Verdades sobre Energia Solar",
-    excerpt: "Desmistificamos as principais dúvidas sobre energia solar e esclarecemos os mitos mais comuns.",
-    content: "Ainda existem muitos mitos sobre a energia solar...",
-    author: "Dra. Ana Santos",
-    date: "2024-01-05",
-    readTime: "6 min",
-    category: "Educação",
-    tags: ["Mitos", "Educação", "FAQ"],
-    featured: false,
-    image: "/placeholder.svg"
-  },
-  {
-    id: 4,
-    title: "Financiamento de Energia Solar: Opções e Dicas",
-    excerpt: "Conheça as melhores opções de financiamento para seu projeto de energia solar e como escolher a ideal.",
-    content: "O financiamento pode ser a chave para viabilizar seu projeto...",
-    author: "Equipe Cactos",
-    date: "2024-01-01",
-    readTime: "7 min",
-    category: "Financiamento",
-    tags: ["Financiamento", "Bancos", "Crédito"],
-    featured: false,
-    image: "/placeholder.svg"
-  }
-];
+// Get blog posts from data file
+const blogPosts = getPublishedPosts().map(post => ({
+  ...post,
+  date: post.publishedAt,
+  readTime: "5 min", // Default read time
+  category: post.tags[0] || "Geral",
+  featured: post.id === '3', // Featured post
+  image: post.featuredImage || "/placeholder.svg"
+}));
 
-const categories = ["Todos", "Investimento", "Guias", "Educação", "Financiamento", "Tecnologia", "Sustentabilidade"];
+const categories = ["Todos", "ANEEL", "Normas", "Mitos", "Regulamentação", "Educação", "Investimento", "Tecnologia"];
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
