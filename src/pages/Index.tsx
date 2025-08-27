@@ -71,8 +71,8 @@ const Index = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Por que escolher energia solar?</h2>
-            <p className="text-xl text-muted-foreground">Vantagens que fazem a diferença</p>
+            <h2 className="text-4xl font-bold mb-4">Por que a Cactos é a melhor escolha no Rio de Janeiro?</h2>
+            <p className="text-xl text-muted-foreground">Especialistas em energia solar com foco total no cliente carioca</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -132,7 +132,7 @@ const Index = () => {
                   Sistemas fotovoltaicos para residências com instalação completa e suporte técnico
                 </p>
                 <Button variant="outline" className="w-full" asChild>
-                  <Link to="/servicos">Saiba Mais</Link>
+                  <Link to="/projetos">Ver Projetos</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -145,7 +145,7 @@ const Index = () => {
                   Projetos de grande porte para indústrias e comércios com máxima eficiência
                 </p>
                 <Button variant="outline" className="w-full" asChild>
-                  <Link to="/servicos">Saiba Mais</Link>
+                  <Link to="/projetos">Ver Projetos</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -176,15 +176,15 @@ const Index = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl md:text-6xl font-bold mb-2">500+</div>
-              <p className="text-lg opacity-90">Projetos Instalados</p>
+              <div className="text-4xl md:text-6xl font-bold mb-2">300+</div>
+              <p className="text-lg opacity-90">Projetos no RJ</p>
             </div>
             <div>
-              <div className="text-4xl md:text-6xl font-bold mb-2">10MW</div>
-              <p className="text-lg opacity-90">Energia Gerada</p>
+              <div className="text-4xl md:text-6xl font-bold mb-2">15MW</div>
+              <p className="text-lg opacity-90">Potência Instalada</p>
             </div>
             <div>
-              <div className="text-4xl md:text-6xl font-bold mb-2">95%</div>
+              <div className="text-4xl md:text-6xl font-bold mb-2">92%</div>
               <p className="text-lg opacity-90">Economia Média</p>
             </div>
             <div>
@@ -212,15 +212,15 @@ const Index = () => {
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4">
-                  "Instalei o sistema há 2 anos e já economizei mais de R$ 15.000. O atendimento foi excelente e a instalação impecável!"
+                  "A Cactos instalou meu sistema em Copacabana e já economizo 92% na conta da Light. Recomendo demais!"
                 </p>
                 <div className="flex items-center">
                   <div className="w-12 h-12 bg-gradient-solar rounded-full flex items-center justify-center mr-4">
                     <Users className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold">Maria Silva</p>
-                    <p className="text-sm text-muted-foreground">Residencial - São Paulo</p>
+                    <p className="font-semibold">Carlos Mendes</p>
+                    <p className="text-sm text-muted-foreground">Residencial - Copacabana, RJ</p>
                   </div>
                 </div>
               </CardContent>
@@ -234,15 +234,15 @@ const Index = () => {
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4">
-                  "Nossa empresa reduziu 90% da conta de energia. ROI excelente e suporte técnico sempre disponível!"
+                  "Nossa loja na Barra da Tijuca reduziu 88% na conta da Enel. Investimento se pagou em 3 anos!"
                 </p>
                 <div className="flex items-center">
                   <div className="w-12 h-12 bg-gradient-energy rounded-full flex items-center justify-center mr-4">
                     <Users className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold">João Santos</p>
-                    <p className="text-sm text-muted-foreground">Empresarial - Campinas</p>
+                    <p className="font-semibold">Ana Costa</p>
+                    <p className="text-sm text-muted-foreground">Comercial - Barra da Tijuca, RJ</p>
                   </div>
                 </div>
               </CardContent>

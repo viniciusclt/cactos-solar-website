@@ -39,10 +39,11 @@ const Sobre = () => {
       {/* Hero Section */}
       <section className="py-20 bg-gradient-solar text-white">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6">Sobre a Cactos</h1>
+          <h1 className="text-5xl font-bold mb-6">Sobre a Cactos Soluções em Energia</h1>
           <p className="text-xl max-w-3xl mx-auto">
-            Líderes em soluções de energia solar, transformando o futuro energético do Brasil
-            com tecnologia de ponta e compromisso com a sustentabilidade.
+            A melhor empresa de energia solar no Rio de Janeiro. Especializada em compra, 
+            instalação e homologação de sistemas solares junto à Light e Enel, oferecendo 
+            soluções completas para reduzir sua conta de energia em até 95%.
           </p>
         </div>
       </section>
@@ -55,17 +56,20 @@ const Sobre = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div>
                 <p className="text-lg text-muted-foreground mb-6">
-                  Fundada em 2015, a Cactos nasceu da visão de democratizar o acesso à energia solar no Brasil. 
-                  Começamos como uma pequena empresa especializada em projetos residenciais e hoje somos 
-                  referência nacional em soluções fotovoltaicas.
+                  A Cactos Soluções em Energia é uma empresa carioca especializada em sistemas 
+                  fotovoltaicos, atuando como integradora completa no mercado de energia solar do 
+                  Rio de Janeiro. Nossa missão é transformar a energia solar em economia real para 
+                  nossos clientes.
                 </p>
                 <p className="text-lg text-muted-foreground mb-6">
-                  Nossa expertise abrange desde pequenas instalações residenciais até grandes complexos 
-                  industriais, sempre priorizando qualidade, eficiência e atendimento personalizado.
+                  Oferecemos soluções completas que incluem projeto, fornecimento de equipamentos, 
+                  instalação e toda a documentação necessária para homologação junto às concessionárias 
+                  Light e Enel, garantindo que nossos clientes tenham total tranquilidade no processo.
                 </p>
                 <p className="text-lg text-muted-foreground">
-                  Com mais de 500 projetos instalados e 10MW de potência total, contribuímos ativamente 
-                  para a transição energética brasileira.
+                  Nossa equipe técnica especializada e nossa parceria com os melhores fornecedores 
+                  de equipamentos do mercado nos permitem entregar projetos de alta qualidade com 
+                  garantia e suporte técnico completo.
                 </p>
               </div>
               <div className="space-y-6">
@@ -74,8 +78,8 @@ const Sobre = () => {
                     <Calendar className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg">2015</h3>
-                    <p className="text-muted-foreground">Fundação da empresa</p>
+                    <h3 className="font-bold text-lg">Início</h3>
+                    <p className="text-muted-foreground">Criação da Cactos no RJ</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">
@@ -83,8 +87,8 @@ const Sobre = () => {
                     <Users className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg">2018</h3>
-                    <p className="text-muted-foreground">Expansão para projetos empresariais</p>
+                    <h3 className="font-bold text-lg">Crescimento</h3>
+                    <p className="text-muted-foreground">Expansão para grandes projetos</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">
@@ -92,8 +96,8 @@ const Sobre = () => {
                     <Award className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg">2024</h3>
-                    <p className="text-muted-foreground">Liderança em inovação solar</p>
+                    <h3 className="font-bold text-lg">Hoje</h3>
+                    <p className="text-muted-foreground">Referência em energia solar RJ</p>
                   </div>
                 </div>
               </div>
@@ -113,8 +117,9 @@ const Sobre = () => {
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Missão</h3>
                 <p className="text-muted-foreground">
-                  Democratizar o acesso à energia solar no Brasil, proporcionando economia, 
-                  sustentabilidade e independência energética aos nossos clientes.
+                  Ser a melhor empresa de energia solar do Rio de Janeiro, oferecendo soluções 
+                  completas e acessíveis que transformem a energia solar em economia real para 
+                  residências, empresas e indústrias.
                 </p>
               </CardContent>
             </Card>
@@ -126,8 +131,9 @@ const Sobre = () => {
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Visão</h3>
                 <p className="text-muted-foreground">
-                  Ser reconhecida como a principal referência em soluções de energia solar, 
-                  liderando a transformação do setor energético brasileiro.
+                  Tornar a energia solar acessível a todos os cariocas, liderando a transição 
+                  energética no Rio de Janeiro com qualidade, transparência e excelência no 
+                  atendimento.
                 </p>
               </CardContent>
             </Card>
@@ -139,8 +145,8 @@ const Sobre = () => {
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Valores</h3>
                 <p className="text-muted-foreground">
-                  Qualidade, transparência, inovação, sustentabilidade e compromisso 
-                  com a satisfação total dos nossos clientes.
+                  Qualidade técnica, atendimento personalizado, transparência total nos processos, 
+                  compromisso com prazos e garantia de resultados para nossos clientes.
                 </p>
               </CardContent>
             </Card>
